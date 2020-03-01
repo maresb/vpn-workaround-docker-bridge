@@ -5,10 +5,10 @@ LABEL maintainer="Ben Mares <services-vpn-workaround-docker-bridge@tensorial.com
 # /etc/openvpn is a volume, but we don't want to use it as such.
 # Replace it with /etc/openvpn2.
 
-  ENV OPENVPN=/etc/openvpn2
-  ENV EASYRSA_PKI=/etc/openvpn2/pki
-  ENV EASYRSA_VARS_FILE=/etc/openvpn2/vars
-  RUN mkdir /etc/openvpn2
+  ENV OPENVPN=/etc2/openvpn
+  ENV EASYRSA_PKI=/etc2/openvpn/pki
+  ENV EASYRSA_VARS_FILE=/etc2/openvpn/vars
+  RUN mkdir -p /etc2/openvpn
 
 # Generate config for localhost
 
@@ -26,5 +26,5 @@ LABEL maintainer="Ben Mares <services-vpn-workaround-docker-bridge@tensorial.com
   RUN ( \
           ovpn_getclient mynet-vpn-client \
        && echo route-nopull \
-       && echo route 192.168.88.0 255.255.255.0 \
-      ) > /etc/openvpn2/mynet-vpn-client.ovpn
+       && echo route 172.17.0.0 255.255.255.0 \
+      ) > /etc2/openvpn/vpn-workaround-client.ovpn
