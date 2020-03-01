@@ -3,6 +3,11 @@ VPN as a workaround for the lack of bridge network on Docker for Windows and Mac
 
 ---
 
+## Links
+
+- [vpn-workaround-docker-bridge on GitHub](https://github.com/maresb/vpn-workaround-docker-bridge)
+- [vpn-workaround-docker-bridge on Docker Hub](https://hub.docker.com/repository/docker/maresb/vpn-workaround-docker-bridge)
+
 ## Introduction
 
 Docker for Windows or Mac is a great way to tinker with microservices. However, if you want to
