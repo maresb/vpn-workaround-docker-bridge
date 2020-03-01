@@ -26,7 +26,7 @@ You should be able to connect to this container with a browser by visiting [`127
 you will not be able to connect.  This is the problem which we will resolve.
 
 
-## Set up and configure Docker image
+## Run the VPN in a Docker container
 
 Run the following commands:
 
@@ -38,50 +38,63 @@ docker cp my-docker-vpn:/etc2/openvpn/vpn-workaround-client.ovpn .
 
 The last command creates the client configuration file `vpn-workaround-client.ovpn` in the current directory.
 
+The `--restart always` flag starts the container on boot, unless the container itself has been stopped.
+
+## Shutting down the container
+
+When you wish to stop the container, run the following commands:
+
+```
+docker stop my-docker-vpn
+docker rm my-docker-vpn
+```
+
+Note that `docker rm` doesn't delete the image, it just cleans up the stopped container.
+
 ## Client configuration
 
 For Windows, download [OpenVPN Connect for Windows](https://openvpn.net/client-connect-vpn-for-windows/).  This has been tested on version 3.1.2 (572) beta.
 
 Start "OpenVPN Connect" and import the `vpn-workaround-client.ovpn` file, press "Add" and connect.  Press the triple-bars button in the upper-left, select "Settings" and turn on "Reconnect on Reboot."  
 
-Now you should be able to connect directly to the Docker containers via their IP addresses.  On reboot, the OpenVPN Connect client will automatically try to reestablish the connection.  It should succeed after Docker for Windows starts.
+Now if the VPN container is running, and you are connected with the client, then you should 
+be able to connect directly to other Docker containers via their IP addresses.  On reboot,
+the OpenVPN Connect client will automatically try to reestablish the connection.  It should
+succeed after Docker for Windows starts.
 
-## Cleanup
-
-To reverse this setup, run the following commands:
-
-```
-docker stop my-docker-vpn
-docker rm my-docker-vpn
-rm vpn-workaround-client.ovpn
-```
 
 ## Set up a non-default network (optional, but highly recommended)
 
 The default network on Docker works fine, dynamically allocating an IP address for any new
 container on the subnet `172.17.0.*`.  Unfortunately, one is not allowed to manually assign an
 IP address to a container on this default subnet.  Thus we will launch containers on a new
-"docker network".
+"docker network" where we can assign IPs.
 
 1. Create a new "docker network" with a specified subnet:
+    ```
+    docker network create --subnet=192.168.88.0/24 mynet
+    ```
+    Note: the subnet (in particular the number `88`) is customizable, as is the name `mynet`.
 
-```
-docker network create --subnet=192.168.88.0/24 mynet
-```
-Note: the subnet (in particular the number `88`) is customizable, as is the name `mynet`.
+2. Edit `vpn-workaround-client.ovpn`.  Change the last line from
+    ```
+    route 172.17.0.0 255.255.255.0
+    ```
+    to 
+    ```
+    route 192.168.88.0 255.255.255.0
+    ```
 
-2. Edit `vpn-workaround-client.ovpn`.  Change the last line 
-from `route 172.17.0.0 255.255.255.0` to `route 192.168.88.0 255.255.255.0` .
-
-3. Start the VPN inside this subnet by adding `--network mynet` to the `docker run` command.  If the container is already running on the default subnet, then we need to stop it:
-```
-docker stop my-docker-vpn
-docker rm my-docker-vpn
-```
-Then we start the VPN:
-```
-docker run -d -p 127.0.0.1:1194:1194/udp --network mynet --cap-add=NET_ADMIN --restart always --name my-docker-vpn maresb/vpn-workaround-docker-bridge
-```
+3. Start the VPN inside this subnet by adding `--network mynet` to the `docker run` command.  
+If the container is already running on the default subnet, then we need to stop it:
+    ```
+    docker stop my-docker-vpn
+    docker rm my-docker-vpn
+    ```
+    Then we start the VPN:
+    ```
+    docker run -d -p 127.0.0.1:1194:1194/udp --network mynet --cap-add=NET_ADMIN --restart always --name my-docker-vpn maresb/vpn-workaround-docker-bridge
+    ```
 
 4. In the VPN Client, delete the current configuration and load the modified `vpn-workaround-client.ovpn` as per the instructions in [Client Configuration](client-configuration).
 
@@ -93,7 +106,7 @@ docker run --rm -it -p 127.0.0.1:8080:80 --network=mynet --ip=192.168.88.123 ngi
 ```
 (Hit Ctrl+C twice to stop the test server.)
 
-Similar to before, if we visit `localhost:8080`, we should see "Server address: 192.168.88.123:80".
+Similar to before, if we visit [`localhost:8080`](http://localhost:8080), we should see "Server address: 192.168.88.123:80".
 If the VPN is correctly functioning, [`192.168.88.123:80`](http://192.168.88.123:80) will also be 
 accessible.
 
