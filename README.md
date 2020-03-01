@@ -42,9 +42,21 @@ docker run -d -p 127.0.0.1:1194:1194/udp --cap-add=NET_ADMIN --restart always --
 docker cp my-docker-vpn:/etc2/openvpn/vpn-workaround-client.ovpn .
 ```
 
+#### Explanation
+
 The last command creates the client configuration file `vpn-workaround-client.ovpn` in the current directory.
 
-The `--restart always` flag starts the container on boot, unless the container itself has been stopped.
+The `-d` flag runs the container in the background ("detached mode").
+
+The `-p 127.0.0.1:1194:1194/udp` argument publishes the VPN to UDP port 1194 of the loopback interface `127.0.0.1`.  Publishing to the loopback interface prevents other computers on your local network from connecting to the port.
+
+The `--cap-add=NET_ADMIN` argument allows the container to have extra networking privileges in the VM.
+
+The `--restart always` argument starts the container on boot, unless the container itself has been stopped.
+
+The `--name my-docker-vpn` argument gives the container a deterministic name, which can be customized.
+
+The `maresb/vpn-workaround-docker-bridge` argument refers to the image which is hosted on Docker Hub.
 
 ## Shutting down the container
 
