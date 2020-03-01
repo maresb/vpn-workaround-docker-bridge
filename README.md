@@ -22,7 +22,8 @@ docker run --rm -it -p 127.0.0.1:8080:80 nginxdemos/hello
 (Hit Ctrl+C twice to stop the test server.)
 
 You should be able to connect to this container with a browser by visiting [`127.0.0.1:8080`](http://127.0.0.1:8080) or equivalently
-[`localhost:8080`](http://localhost:8080).  However, if you attempt to visit the address you see for "Server Address:",
+[`localhost:8080`](http://localhost:8080).  If you attempt to visit the address you see for "Server Address:" 
+from Linux it will work as expected, but if you are using Docker for Windows or Mac,
 you will not be able to connect.  This is the problem which we will resolve.
 
 
@@ -117,3 +118,15 @@ To delete the docker network we created in the last section, stop all containers
 ```
 docker network rm mynet
 ```
+
+## Security
+
+This container is intended for internal use on a single-user machine.  Since there is no potential
+for eavesdropping, the normal security features of a VPN should not be necessary.  Indeed, the certificates 
+being used are generated on Docker Hub and are publicly accessible.
+
+If you run Docker containers which are publicly accessible and they become compromised, having this VPN running
+could make it easier for an attacker to compromise the host.
+
+I make [no warranty or guarantee](LICENSE) about the security of this container.  If you find a
+vulnerability, please report it to me under "Issues".
