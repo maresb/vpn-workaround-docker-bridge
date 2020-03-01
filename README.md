@@ -42,6 +42,8 @@ docker run -d -p 127.0.0.1:1194:1194/udp --cap-add=NET_ADMIN --restart always --
 docker cp my-docker-vpn:/etc2/openvpn/vpn-workaround-client.ovpn .
 ```
 
+Next you should [configure the client](#client-configuration)
+
 #### Explanation
 
 The last command creates the client configuration file `vpn-workaround-client.ovpn` in the current directory.
@@ -114,7 +116,7 @@ If the container is already running on the default subnet, then we need to stop 
     docker run -d -p 127.0.0.1:1194:1194/udp --network mynet --cap-add=NET_ADMIN --restart always --name my-docker-vpn maresb/vpn-workaround-docker-bridge
     ```
 
-4. In the VPN Client, delete the current configuration and load the modified `vpn-workaround-client.ovpn` as per the instructions in [Client Configuration](client-configuration).
+4. In the VPN Client, delete the current configuration and load the modified `vpn-workaround-client.ovpn` as per the instructions in [Client Configuration](#client-configuration).
 
 #### Testing
 
