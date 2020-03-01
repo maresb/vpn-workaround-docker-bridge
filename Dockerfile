@@ -1,6 +1,6 @@
 FROM kylemanna/openvpn:latest@sha256:266c52c3df8d257ad348ea1e1ba8f0f371625b898b0eba6e53c785b82f8d897e
 
-LABEL maintainer=Ben Mares <services-vpn-workaround-docker-bridge@tensorial.com>
+LABEL maintainer="Ben Mares <services-vpn-workaround-docker-bridge@tensorial.com>"
 
 # /etc/openvpn is a volume, but we don't want to use it as such.
 # Replace it with /etc/openvpn2.
