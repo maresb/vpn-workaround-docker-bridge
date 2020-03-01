@@ -126,12 +126,12 @@ docker network rm mynet
 
 ## Security
 
+I make [no warranty or guarantee](LICENSE) about the security of this container.  If you find a
+vulnerability, please report it to me under "Issues".
+
 This container is intended for internal use on a single-user machine.  Since there is no potential
 for eavesdropping, the normal security features of a VPN should not be necessary.  Indeed, the certificates 
 being used are generated on Docker Hub and are publicly accessible.
 
 If you run Docker containers which are publicly accessible and they become compromised, having this VPN running
 could make it easier for an attacker to compromise the host.
-
-I make [no warranty or guarantee](LICENSE) about the security of this container.  If you find a
-vulnerability, please report it to me under "Issues".
