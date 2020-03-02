@@ -17,7 +17,7 @@ processes directly in your OS's kernel instead of a VM), so you would be much be
 switching to Linux.
 
 If however you are unfortunate enough to be stuck on Windows or Mac for whatever reason, one
-of the many problems you may encounter is the lack of "Bridge Networking".  Effectively, bridge
+of the many problems you may encounter is the lack of "Bridge Networking".  (Officially, bridge networking exists [neither in Docker for Windows](https://docs.docker.com/docker-for-windows/networking/#known-limitations-use-cases-and-workarounds) nor on [Docker for Mac](https://docs.docker.com/docker-for-mac/networking/#known-limitations-use-cases-and-workarounds).)  Effectively, bridge
 networking allows you to connect directly to the IP address assigned to a running container.
 Let's illustrate this with an example.
 
@@ -80,7 +80,7 @@ Note that `docker rm` doesn't delete the image, it just cleans up the stopped co
 Start "OpenVPN Connect" and import the `vpn-workaround-client.ovpn` file, press "Add" and connect.  Press the triple-bars button in the upper-left, select "Settings" and turn on "Reconnect on Reboot."  
 
 Now if the VPN container is running, and you are connected with the client, then you should 
-be able to connect directly to other Docker containers via their IP addresses.  On reboot,
+be able to connect directly to other Docker containers via their IP addresses.  (Revisit the procedure in the [introduction](#introduction))  On reboot,
 the OpenVPN Connect client will automatically try to reestablish the connection.  It should
 succeed after Docker for Windows starts.
 
@@ -142,12 +142,16 @@ docker network rm mynet
 
 ## Security
 
-I make [no warranty or guarantee](LICENSE) about the security of this container.  If you find a
+I believe that in most contexts the above procedure is secure, however I make
+[no warranty or guarantee](LICENSE) about the security.  Read below for a few potential caveats. If you find a
 vulnerability, please report it to me under "Issues".
 
-This container is intended for internal use on a single-user machine.  Since there is no potential
-for eavesdropping, the normal security features of a VPN should not be necessary.  Indeed, the certificates 
-being used are generated on Docker Hub and are publicly accessible.
+This container is intended for use on a single-user machine where the port is accessible only to the local user.
+Since there is no potential for eavesdropping, the normal security features of a VPN should not be necessary.
+Indeed, the certificates being used here have been generated on Docker Hub and are publicly accessible, and thus
+offer no cryptographic protection.
 
 If you run Docker containers which are publicly accessible and they become compromised, having this VPN running
-could make it easier for an attacker to compromise the host.
+might possibly make it easier for an attacker to compromise the host.
+
+This container is not intended for multi-user machines, production environments, critical systems, etc.
