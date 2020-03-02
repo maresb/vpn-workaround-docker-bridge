@@ -17,7 +17,7 @@ processes directly in your OS's kernel instead of a VM), so you would be much be
 switching to Linux.
 
 If however you are unfortunate enough to be stuck on Windows or Mac for whatever reason, one
-of the many problems you may encounter is the lack of "Bridge Networking".  (Officially, bridge networking exists [neither in Docker for Windows](https://docs.docker.com/docker-for-windows/networking/#known-limitations-use-cases-and-workarounds) nor on [Docker for Mac](https://docs.docker.com/docker-for-mac/networking/#known-limitations-use-cases-and-workarounds).)  Effectively, bridge
+of the many problems you may encounter is the lack of "Bridge Networking".  (Officially, bridge networking exists [neither in Docker for Windows](https://docs.docker.com/docker-for-windows/networking/#known-limitations-use-cases-and-workarounds) nor in [Docker for Mac](https://docs.docker.com/docker-for-mac/networking/#known-limitations-use-cases-and-workarounds).)  Effectively, bridge
 networking allows you to connect directly to the IP address assigned to a running container.
 Let's illustrate this with an example.
 
