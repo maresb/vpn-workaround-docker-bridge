@@ -73,7 +73,9 @@ Note that `docker rm` doesn't delete the image, it just cleans up the stopped co
 
 ## Client configuration
 
-For Windows, download [OpenVPN Connect for Windows](https://openvpn.net/client-connect-vpn-for-windows/).  This has been tested on version 3.1.2 (572) beta.
+**For Windows**, download [OpenVPN Connect for Windows](https://openvpn.net/client-connect-vpn-for-windows/).  This has been tested on version 3.1.2 (572) beta.  Be sure to download v3 (beta) and not v2.
+
+**For MacOS**, download [OpenVPN Connect for MacOS](https://openvpn.net/vpn-server-resources/connecting-to-access-server-with-macos/#future-replacement-for-openvpn-connect-client).  This has been tested on version 3.1.0 (890) beta.  Be sure to download the "Future replacement" and not version 2.
 
 Start "OpenVPN Connect" and import the `vpn-workaround-client.ovpn` file, press "Add" and connect.  Press the triple-bars button in the upper-left, select "Settings" and turn on "Reconnect on Reboot."  
 
