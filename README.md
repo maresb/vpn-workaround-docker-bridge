@@ -80,7 +80,7 @@ Note that `docker rm` doesn't delete the image, it just cleans up the stopped co
 Start "OpenVPN Connect" and import the `vpn-workaround-client.ovpn` file, press "Add" and connect.  Press the triple-bars button in the upper-left, select "Settings" and turn on "Reconnect on Reboot."  
 
 Now if the VPN container is running, and you are connected with the client, then you should 
-be able to connect directly to other Docker containers via their IP addresses.  (Revisit the procedure in the [introduction](#introduction))  On reboot,
+be able to connect directly to other Docker containers via their IP addresses.  (Revisit the procedure in the [introduction](#introduction).)  On reboot,
 the OpenVPN Connect client will automatically try to reestablish the connection.  It should
 succeed after Docker for Windows starts.
 
